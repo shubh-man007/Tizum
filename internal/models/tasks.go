@@ -8,3 +8,7 @@ type Task struct {
 	CreatedAt time.Time `json:"created_at"`
 	Status    bool      `json:"status"`
 }
+
+func NewTask() *Task {
+	return &Task{}
+}
