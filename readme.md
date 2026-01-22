@@ -1,8 +1,14 @@
 # Tizum
 
-Tizum is a lightweight terminal-based task manager written in Go. It provides both a traditional CLI interface and an optional TUI powered by the Bubble Tea framework. Tasks are stored locally using SQLite, making the tool portable and reliable without requiring any external database servers.
-
-Tizum is designed for quick task entry, clean viewing, and efficient management directly from the command line.
+```
+████████╗██╗███████╗██╗   ██╗███╗   ███╗
+╚══██╔══╝██║╚══███╔╝██║   ██║████╗ ████║
+   ██║   ██║  ███╔╝ ██║   ██║██╔████╔██║
+   ██║   ██║ ███╔╝  ██║   ██║██║╚██╔╝██║
+   ██║   ██║███████╗╚██████╔╝██║ ╚═╝ ██║
+   ╚═╝   ╚═╝╚══════╝ ╚═════╝ ╚═╝     ╚═╝           
+ ```
+Tizum is a lightweight terminal-based task manager written in Go. 
 
 ---
 
@@ -65,9 +71,8 @@ tizum tui
 
 ---
 
-## Bubble Tea
+![Usage](https://github.com/shubh-man007/Tizum/blob/main/assets/tizum.png)
 
-Tizum uses the Bubble Tea framework for its TUI mode. Bubble Tea is a functional and declarative TUI framework for Go that allows building clean and responsive terminal applications. The TUI displays tasks, allows navigation using the keyboard, and interacts with the same SQLite backend used by the CLI.
 
 ---
 
@@ -161,10 +166,82 @@ go build -o tizum.exe .\cmd\tizum
 mv -Force .\tizum.exe C:\Users\<username>\bin\
 ```
 
+### 4. Copy the database to the user home directory
+
+```
+mkdir C:\Users\<username>\.tizum
+cp .\tizu.db C:\Users\<username>\.tizum\
+```
+
 Test:
 
 ```
 tizum list
+```
+
+---
+
+## Global Installation on WSL
+
+To run `tizum` globally from any directory in WSL, follow these steps.
+
+### 1. Build the binary
+
+From your project root:
+
+```
+go build -o tizum ./cmd/tizum
+```
+
+### 2. Move the binary to a global PATH location
+
+```
+sudo mv tizum /usr/local/bin/
+sudo chmod +x /usr/local/bin/tizum
+```
+
+### 3. Set up the database
+
+You have two options for database management:
+
+#### Option A: Separate database for WSL
+
+```
+mkdir -p ~/.tizum
+cp tizu.db ~/.tizum/
+```
+
+#### Option B: Shared database with Windows (Recommended)
+
+Create a symlink to use the same database across Windows and WSL:
+
+```
+mkdir -p ~/.tizum
+ln -s /mnt/c/Users/<username>/.tizum/tizu.db ~/.tizum/tizu.db
+```
+
+With a shared database, tasks added in Windows will appear in WSL and vice versa.
+
+### 4. Test the installation
+
+```
+cd ~
+tizum list
+tizum tui
+```
+
+### Optional: Quick rebuild alias
+
+Add this alias to your `~/.bashrc` or `~/.zshrc` for easier updates:
+
+```
+alias install-tizum='go build -o tizum ./cmd/tizum && sudo mv tizum /usr/local/bin/'
+```
+
+Then rebuild with:
+
+```
+install-tizum
 ```
 
 ---
@@ -186,3 +263,14 @@ To fix this:
 * Rebuild the binary.
 
 WSL cannot produce a Windows CGO-enabled binary, so all Windows builds must happen natively.
+
+---
+
+## Database Storage Location
+
+Tizum stores its database in the user's home directory to ensure consistent access from any working directory. The database locations are:
+
+* **Windows**: `C:\Users\<username>\.tizum\tizu.db`
+* **Linux/macOS/WSL**: `~/.tizum/tizu.db`
+
+This approach follows standard conventions for CLI tools and separates executable files from data files. If you're using both Windows and WSL, you can share the same database by creating a symlink in WSL that points to the Windows database location, allowing seamless task management across both environments.
