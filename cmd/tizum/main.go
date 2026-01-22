@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/shubh-man007/Tizu/internal/database"
 	"github.com/shubh-man007/Tizu/internal/repository"
@@ -50,7 +51,10 @@ func main() {
 			fmt.Println("Usage: tizum toggle <id>")
 			return
 		}
-		id := atoi(os.Args[2])
+		id, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Println("Error parsing: ", err)
+		}
 		taskList, _ := tiz.ReadTasks()
 		for _, t := range taskList {
 			if t.ID == id {
@@ -59,7 +63,10 @@ func main() {
 		}
 
 	case "delete":
-		id := atoi(os.Args[2])
+		id, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Println("Error parsing: ", err)
+		}
 		tiz.DeleteTask(id)
 		fmt.Println("Task deleted")
 
@@ -68,7 +75,10 @@ func main() {
 			fmt.Println("Usage: tizum edit <id> <new_text>")
 			return
 		}
-		id := atoi(os.Args[2])
+		id, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Println("Error parsing: ", err)
+		}
 		newText := os.Args[3]
 		tiz.EditTask(id, newText)
 		fmt.Println("Task updated")
@@ -82,10 +92,4 @@ func main() {
 	default:
 		fmt.Println("Unknown command:", os.Args[1])
 	}
-}
-
-func atoi(s string) int {
-	var n int
-	fmt.Sscan(s, &n)
-	return n
 }
