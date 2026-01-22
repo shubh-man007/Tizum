@@ -67,7 +67,7 @@ func (t *TizOrch) ReadTasks() ([]models.Task, error) {
 	return tasks, nil
 }
 
-func (t *TizOrch) UpdateTask(id string, done bool) error {
+func (t *TizOrch) ToggleTask(id int, done bool) error {
 	query := "UPDATE tasks SET status = ? WHERE id = ?"
 	status := 0
 	if done {
@@ -78,7 +78,13 @@ func (t *TizOrch) UpdateTask(id string, done bool) error {
 	return err
 }
 
-func (t *TizOrch) DeleteTask(id string) error {
+func (t *TizOrch) EditTask(id int, diff string) error {
+	query := "UPDATE tasks SET task = ? WHERE id = ?"
+	_, err := t.Orch.DB.Exec(query, diff, id)
+	return err
+}
+
+func (t *TizOrch) DeleteTask(id int) error {
 	query := "DELETE FROM tasks WHERE id = ?"
 
 	_, err := t.Orch.DB.Exec(query, id)
