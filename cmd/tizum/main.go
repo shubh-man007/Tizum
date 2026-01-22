@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/shubh-man007/Tizu/internal/database"
@@ -12,7 +13,19 @@ import (
 )
 
 func main() {
-	db, err := database.InitDB("tizu.db")
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatalf("Could not find home directory: %v", err)
+	}
+
+	tizumDir := filepath.Join(homeDir, ".tizum")
+	if err := os.MkdirAll(tizumDir, 0755); err != nil {
+		log.Fatalf("Could not create config directory: %v", err)
+	}
+
+	dbPath := filepath.Join(tizumDir, "tizu.db")
+
+	db, err := database.InitDB(dbPath)
 	if err != nil {
 		log.Fatalf("DB error: %v", err)
 	}
