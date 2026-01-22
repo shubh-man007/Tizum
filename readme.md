@@ -69,9 +69,7 @@ tizum edit --id=3 --task="Updated task text"
 tizum tui
 ```
 
----
-
-![Usage](https://github.com/shubh-man007/Tizum/blob/main/assets/tizum.png)
+![Usage](https://github.com/shubh-man007/Tizum/blob/main/assets/Tizum.png)
 
 
 ---
