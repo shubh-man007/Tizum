@@ -48,13 +48,13 @@ tizum list
 ### Delete a Task
 
 ```
-tizum delete --id=3
+tizum delete <id>
 ```
 
 ### Toggle Task Completion
 
 ```
-tizum toggle --id=3
+tizum toggle <id>
 ```
 
 ### Edit a Task
