@@ -11,7 +11,7 @@
 
 Tizum is a lightweight terminal-based task manager written in Go. It uses SQLite for storage and a Bubble Tea TUI for interactive use. 
 
-![TUI](https://github.com/shubh-man007/Tizum/blob/main/assets/Tizum.png)
+![TUI](https://github.com/shubh-man007/Tizum/blob/main/assets/tizum.png)
 ---
 
 ## Commands
