@@ -25,7 +25,7 @@ func (t *TizOrch) CreateTask(taskName string) error {
 }
 
 func (t *TizOrch) ReadTasks() ([]models.Task, error) {
-	query := "SELECT id, task, created_at, status FROM tasks"
+	query := "SELECT id, task, created_at, status FROM tasks ORDER BY id ASC"
 	rowTasks, err := t.Orch.DB.Query(query)
 	if err != nil {
 		log.Printf("Could not fetch tasks: %v", err)
